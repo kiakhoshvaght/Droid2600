@@ -196,7 +196,8 @@ public class Image {
             }
 
         } catch (IOException e) {
-            logger.error("failed to read disk image from zip file");
+            logger.error("failed to read disk image from zip file: " + e.toString());
+            e.printStackTrace();
         }
 
         return null;

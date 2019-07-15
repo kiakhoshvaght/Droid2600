@@ -31,10 +31,9 @@ public class FileDialog extends DialogFragment {
     private final static Logger logger = LogManager.getLogger(FullscreenActivity.class.getName());
     private View dialog;
     private OnDiskSelectHandler handler;
-    private ImageFilter currentDiskFilter;
+    static ImageFilter currentDiskFilter;
 
     public FileDialog() {
-        ;
     }
 
     @Override

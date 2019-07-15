@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -36,6 +37,11 @@ import util.LogManager;
 import util.Logger;
 import util.SystemUiHider;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,6 +72,9 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
 
     private static final int COMMAND_CLICK_AREA = 15;
     private static final boolean EMU_PAUSED_WHILE_CONTROL = false;
+    private static final String TAG = FullscreenActivity.class.getName();
+    private static final String  GAME_IMAGE_PATH = "/data/data/org.codewiz.droid2600/";
+    private static final String GAME_IMAGE_NAME = "River_Raid";
 
     private Preferences emuPrefs;
     private Emu emuControl;
@@ -219,6 +228,8 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getFileAccessPermission();
 
         logger.info("Activity.onCreate()");
 
@@ -431,6 +442,13 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
         });
 
         VirtualGamepad.instance().init(this, emuView);
+        try {
+            copyGameFiles();
+            onDiskSelect(new Image(GAME_IMAGE_PATH + GAME_IMAGE_NAME +  ".bin"), FileDialog.currentDiskFilter, false);
+        } catch (IOException e) {
+            Log.e(TAG,"FUNCTION : onCreate => Error copy game files: " + e.toString());
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -788,16 +806,16 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
     }
 
     private synchronized void selectDisk() {
-
-        if (null == fileDialog) {
-            fileDialog = new FileDialog();
-        }
-
-        if (!fileDialog.isVisible() && !fileDialog.isAdded()) {
-            fileDialog.show(getFragmentManager(), "emu_file_dialog");
-        } else {
-            logger.info("file dialog fragment already added and visible!");
-        }
+        Log.i(TAG,"FUNCTION : selectDisk");
+//        if (null == fileDialog) {
+//            fileDialog = new FileDialog();
+//        }
+//
+//        if (!fileDialog.isVisible() && !fileDialog.isAdded()) {
+//            fileDialog.show(getFragmentManager(), "emu_file_dialog");
+//        } else {
+//            logger.info("file dialog fragment already added and visible!");
+//        }
     }
 
     @Override
@@ -916,5 +934,47 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void copyGameFiles() throws IOException {
+
+        File file = new File(GAME_IMAGE_PATH + GAME_IMAGE_NAME + ".bin");
+        if(file.exists()){
+            return;
+        }
+        else{
+            InputStream dbInput = this.getAssets().open(GAME_IMAGE_NAME + ".bin");
+            String outFile = GAME_IMAGE_PATH + GAME_IMAGE_NAME + ".bin";
+            OutputStream dbOutput = new FileOutputStream(outFile);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = dbInput.read(buffer))>0) {
+                dbOutput.write(buffer,0,length);
+            }
+
+            dbOutput.flush();
+            dbOutput.close();
+            dbInput.close();
+        }
+    }
+
+    private void getFileAccessPermission() {
+        Log.i(TAG, "FUNCTION : getFileAccessPermission");
+        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        int REQUEST_EXTERNAL_STORAGE = 1;
+        String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 }
