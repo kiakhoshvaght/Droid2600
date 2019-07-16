@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-import org.codewiz.droid2600.R;
+import com.barang.riverraid.R;
 import util.LogManager;
 import util.Logger;
 

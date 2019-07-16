@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.codewiz.droid2600.R;
+import com.barang.riverraid.R;
 
 /**
  * A simple {@link Fragment} subclass.

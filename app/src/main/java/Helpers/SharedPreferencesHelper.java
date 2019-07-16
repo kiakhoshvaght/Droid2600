@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.codewiz.droid2600.BuildConfig;
+import com.barang.riverraid.BuildConfig;
 
 import java.util.List;
 

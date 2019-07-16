@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -19,8 +18,8 @@ import android.widget.TextView;
 
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.codewiz.droid2600.BuildConfig;
-import org.codewiz.droid2600.R;
+import com.barang.riverraid.BuildConfig;
+import com.barang.riverraid.R;
 
 import java.util.Objects;
 import java.util.Random;

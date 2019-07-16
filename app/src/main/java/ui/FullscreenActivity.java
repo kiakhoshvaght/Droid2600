@@ -23,7 +23,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import org.codewiz.droid2600.R;
+import com.barang.riverraid.R;
 
 import emu.Emu;
 import emu.ImageFilter;
@@ -51,7 +51,7 @@ import java.util.List;
  * 
  * @see SystemUiHider
  */
-public class FullscreenActivity extends FragmentActivity implements FileDialog.OnDiskSelectHandler, EmuControlFragment.OnFragmentInteractionListener, EmuViewFragment.OnFragmentInteractionListener {
+public class FullscreenActivity extends FragmentActivity implements EmuControlFragment.OnFragmentInteractionListener, EmuViewFragment.OnFragmentInteractionListener {
 
     private final static Logger logger = LogManager.getLogger(FullscreenActivity.class.getName());
     private final static boolean ENABLE_INTRO_SOUND = false;
@@ -73,7 +73,7 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
     private static final int COMMAND_CLICK_AREA = 15;
     private static final boolean EMU_PAUSED_WHILE_CONTROL = false;
     private static final String TAG = FullscreenActivity.class.getName();
-    private static final String  GAME_IMAGE_PATH = "/data/data/org.codewiz.droid2600/";
+    private static final String  GAME_IMAGE_PATH = "/data/data/com.barang.riverraid/";
     private static final String GAME_IMAGE_NAME = "River_Raid";
 
     private Preferences emuPrefs;
@@ -101,6 +101,7 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
     private ImageManager diskManager;
     private SoundEffects introSound;
     private boolean introActive = false;
+    static ImageFilter currentDiskFilter;
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
@@ -443,7 +444,7 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
         VirtualGamepad.instance().init(this, emuView);
         try {
             copyGameFiles();
-            onDiskSelect(new Image(GAME_IMAGE_PATH + GAME_IMAGE_NAME +  ".bin"), FileDialog.currentDiskFilter, false);
+            onDiskSelect(new Image(GAME_IMAGE_PATH + GAME_IMAGE_NAME +  ".bin"), null, false);
         } catch (IOException e) {
             Log.e(TAG,"FUNCTION : onCreate => Error copy game files: " + e.toString());
             e.printStackTrace();
@@ -806,18 +807,8 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
 
     private synchronized void selectDisk() {
         Log.i(TAG,"FUNCTION : selectDisk");
-//        if (null == fileDialog) {
-//            fileDialog = new FileDialog();
-//        }
-//
-//        if (!fileDialog.isVisible() && !fileDialog.isAdded()) {
-//            fileDialog.show(getFragmentManager(), "emu_file_dialog");
-//        } else {
-//            logger.info("file dialog fragment already added and visible!");
-//        }
     }
 
-    @Override
     public void onDiskSelect(Image image, ImageFilter filter, boolean longClick) {
 
         Emu emuControl = Emu.instance();

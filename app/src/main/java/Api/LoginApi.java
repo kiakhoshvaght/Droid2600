@@ -2,7 +2,7 @@ package Api;
 
 import android.util.Log;
 
-import org.codewiz.droid2600.BuildConfig;
+import com.barang.riverraid.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.Subscription;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 

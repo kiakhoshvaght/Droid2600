@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Droid2600</string>
+    <string name="app_name">آتاری</string>
     <string name="button_reset_text">Reset</string>
     <string name="button_settings_text">Settings...</string>
     <string name="button_runstop_text">RUN/STOP</string>

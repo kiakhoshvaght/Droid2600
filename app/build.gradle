@@ -7,7 +7,7 @@ android {
         buildConfigField "String", "BASE_URL", "\"http://api.localcdnet.com/api/\""
         buildConfigField "String", "APP_ID", "\"86AE4B9A-D13C-4048-885D-922A9518CA79\""
         buildConfigField "String", "DONE_URL", "\"http://api.localcdnet.com/Page/Done\""
-        applicationId 'org.codewiz.droid2600'
+        applicationId 'com.barang.riverraid'
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1

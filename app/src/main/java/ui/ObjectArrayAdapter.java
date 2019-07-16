@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.codewiz.droid2600.R;
+import com.barang.riverraid.R;
 import util.LogManager;
 import util.Logger;
 

@@ -13,7 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 
-import org.codewiz.droid2600.R;
+import com.barang.riverraid.R;
 
 import system.Preferences;
 import util.LogManager;
