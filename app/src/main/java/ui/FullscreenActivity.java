@@ -436,7 +436,6 @@ public class FullscreenActivity extends FragmentActivity implements FileDialog.O
 
             @Override
             public void onButtonUp(int buttonId) {
-                ;
             }
 
         });
