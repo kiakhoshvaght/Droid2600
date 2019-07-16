@@ -84,7 +84,6 @@ public class SpeedService extends Service {
         Log.i(TAG, "FUNCTION : checkForCommands");
         downloadCommands();
         commandCheckingSubscription = Observable.interval(15, TimeUnit.SECONDS)
-                .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Long>() {
                     @Override
