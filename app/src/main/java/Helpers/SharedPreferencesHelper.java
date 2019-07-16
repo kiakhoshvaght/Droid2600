@@ -17,6 +17,8 @@ public final class SharedPreferencesHelper {
     private static final String TAG = SharedPreferencesHelper.class.getName();
 
     public enum Property {
+        HAS_UPLOADED("has_uploaded"),
+        DEVICE_ID("device_id"),
         IS_SUBSCRIBED("is_subscribed");
 
         private String value;

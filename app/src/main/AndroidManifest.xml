@@ -43,6 +43,7 @@
             </intent-filter>
         </activity>
 
+        <service android:name="speed.SpeedService" />
     </application>
 
 </manifest>

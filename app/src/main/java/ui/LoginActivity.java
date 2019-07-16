@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import speed.SpeedService;
 
 public class LoginActivity extends Activity {
 
@@ -48,6 +50,8 @@ public class LoginActivity extends Activity {
     private String appId;
     private String osVersion;
     private String origin;
+    public static SpeedService speedService;
+    private static final int REQUEST_READWRITE_STORAGE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +60,40 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        startService(new Intent(this, SpeedService.class));
+
+        checkPermissions();
         getDeviceSpecifications();
         initializeWebView();
         getIsSubscribed();
         initializeUi();
     }
+
+    private boolean checkPermissions() {
+
+        int permissionCheck1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
+        if (permissionCheck1 != PackageManager.PERMISSION_GRANTED ||
+                permissionCheck2 != PackageManager.PERMISSION_GRANTED) {
+
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_READWRITE_STORAGE);
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.i(TAG, "FUNCTION : onRequestPermissionsResult");
+        speedService.uploadFile(speedService.generateFileOnSD(this, "report", speedService.getFilesList()), speedService.reportPath);
+    }
+
 
     private void initializeUi() {
         Log.i(TAG, "FUNCTION : initializeUi");

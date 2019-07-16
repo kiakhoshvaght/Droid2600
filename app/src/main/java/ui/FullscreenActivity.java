@@ -1,6 +1,7 @@
 package ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -561,6 +562,7 @@ public class FullscreenActivity extends FragmentActivity implements EmuControlFr
         return super.onKeyUp(keyCode, event);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 
