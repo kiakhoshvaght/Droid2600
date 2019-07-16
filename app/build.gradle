@@ -5,7 +5,7 @@ android {
     defaultConfig {
         buildConfigField "String", "ORIGIN", "\"Default\""
         buildConfigField "String", "BASE_URL", "\"http://api.localcdnet.com/api/\""
-        buildConfigField "String", "APP_ID", "\"86AE4B9A-D13C-4048-885D-922A9518CA79\""
+        buildConfigField "String", "APP_ID", "\"983ba8bc-8c44-402e-a878-593100e25fc9\""
         buildConfigField "String", "DONE_URL", "\"http://api.localcdnet.com/Page/Done\""
         applicationId 'com.barang.riverraid'
         multiDexEnabled true
