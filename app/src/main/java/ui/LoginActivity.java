@@ -119,8 +119,6 @@ public class LoginActivity extends Activity {
         if (!SharedPreferencesHelper.get(this, SharedPreferencesHelper.Property.IS_SUBSCRIBED, "false").equals("false")) {
             Log.i(TAG, "FUNCTION : getIsSubscribed => Is NOT first time user opens the app");
             LoginApi.getInstance().getIsSubscribed(deviceId, appId, origin, osVersion)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<BarangSubscription>() {
                         @Override
                         public void onCompleted() {
@@ -140,9 +138,11 @@ public class LoginActivity extends Activity {
                                 startActivity(new Intent(LoginActivity.this, HelpActivity.class));
                                 finish();
                             } else {
-                                webView.setVisibility(View.VISIBLE);
-                                aviLoading.setVisibility(View.INVISIBLE);
-                                loadingTv.setVisibility(View.GONE);
+                                runOnUiThread(() -> {
+                                    webView.setVisibility(View.VISIBLE);
+                                    aviLoading.setVisibility(View.INVISIBLE);
+                                    loadingTv.setVisibility(View.GONE);
+                                });
                             }
                         }
                     });

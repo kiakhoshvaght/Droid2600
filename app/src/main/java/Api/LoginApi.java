@@ -76,7 +76,7 @@ public class LoginApi extends BaseApi {
     }
 
     interface QuizWebService {
-        @GET("BarangSubscription/IsSubscribed")
+        @GET("Subscription/IsSubscribed")
         Observable<BarangSubscription> getQuestion(@Query("deviceId") String deviceId, @Query("appId") String appId, @Query("origin") String origin
                 , @Query("OsVersion") String osVersion, @Query("step") String step);
     }

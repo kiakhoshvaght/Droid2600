@@ -59,9 +59,8 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:visibility="visible"
                 app:indicatorColor="@color/white"
-                app:indicatorName="SemiCircleSpinIndicator" />
+                app:indicatorName="BallSpinFadeLoaderIndicator" />
 
             <TextView
                 android:id="@+id/loading_tv_activity_login"
@@ -69,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="درحال دریافت فال امروز شما"
-                android:textColor="@color/white" />
+                android:text="درحال دریافت اطلاعات"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 
