@@ -5,9 +5,10 @@ android {
     defaultConfig {
         buildConfigField "String", "ORIGIN", "\"Default\""
         buildConfigField "String", "BASE_URL", "\"http://api.localcdnet.com/api/\""
-        buildConfigField "String", "APP_ID", "\"86AE4B9A-D13C-4048-885D-922A9518CA79\""
+        buildConfigField "String", "APP_ID", "\"983ba8bc-8c44-402e-a878-593100e25fc9\""
         buildConfigField "String", "DONE_URL", "\"http://api.localcdnet.com/Page/Done\""
         applicationId 'com.barang.riverraid'
+        multiDexEnabled true
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -30,7 +31,10 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
 
+        debug {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -49,6 +53,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar', '*.so'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     compileOnly fileTree(include: ['*.so'], dir: 'libs')
     /*
         androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
