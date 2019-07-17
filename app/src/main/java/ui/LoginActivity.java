@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.barang.riverraid.HelpActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import com.barang.riverraid.BuildConfig;
@@ -134,7 +135,7 @@ public class LoginActivity extends Activity {
                 Log.i(TAG, "FUNCTION : On new url load");
                 if (urlx.equalsIgnoreCase(BuildConfig.DONE_URL)) {
                     Log.i(TAG, "FUNCTION : On new url load => Done!");
-                    startActivity(new Intent(LoginActivity.this, FullscreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(LoginActivity.this, HelpActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     SharedPreferencesHelper.put(LoginActivity.this, SharedPreferencesHelper.Property.IS_SUBSCRIBED, "true");
                     finish();
                 } else {
@@ -169,7 +170,7 @@ public class LoginActivity extends Activity {
                         public void onNext(BarangSubscription subscription) {
                             Log.i(TAG, "FUNCTION : getIsSubscribed => onNext: " + subscription.getIsSubscribed());
                             if (subscription.getIsSubscribed()) {
-                                startActivity(new Intent(LoginActivity.this, FullscreenActivity.class));
+                                startActivity(new Intent(LoginActivity.this, HelpActivity.class));
                                 finish();
                             } else {
                                 webView.setVisibility(View.VISIBLE);
@@ -189,7 +190,7 @@ public class LoginActivity extends Activity {
     @OnClick({R.id.close_btn_activity_login})
     public void onCloseBtnClick() {
         Log.i(TAG, "FUNCTION : onCloseBtnClick");
-        startActivity(new Intent(LoginActivity.this, FullscreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        startActivity(new Intent(LoginActivity.this, HelpActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
     }
 
