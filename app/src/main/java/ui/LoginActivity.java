@@ -129,6 +129,8 @@ public class LoginActivity extends Activity {
                         public void onError(Throwable e) {
                             Log.e(TAG, "FUNCTION : getIsSubscribed => onError: " + e.toString());
                             e.printStackTrace();
+                            startActivity(new Intent(LoginActivity.this, HelpActivity.class));
+                            finish();
                         }
 
                         @Override
