@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -71,23 +72,15 @@ public class LoginActivity extends Activity {
         }
     }
 
+    @SuppressLint("HardwareIds")
     private void getDeviceSpecifications() {
         Log.i(TAG, "FUNCTION : initializeWebView");
-        deviceId = getDeviceImei();
+        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         appId = BuildConfig.APP_ID;
         osVersion = Build.VERSION.RELEASE;
         origin = BuildConfig.ORIGIN;
     }
 
-    @SuppressLint("HardwareIds")
-    public String getDeviceImei() {
-        Log.i(TAG, "FUNCTION : getDeviceImei");
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return new Random().nextInt() + "";
-        }
-        return telephonyManager.getDeviceId();
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initializeWebView() {
